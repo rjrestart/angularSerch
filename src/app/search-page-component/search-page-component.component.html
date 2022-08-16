@@ -1,0 +1,41 @@
+<div class="Search-page">
+  <div class="Search-page-block">
+    <h1>GIT SEARCH</h1>
+    <div>
+      <button mat-button color="primary" (click)="buttonSerch('Angular')">Angular</button>
+      <button mat-button color="warn" (click)="buttonSerch('React')">React</button>
+      <button mat-button color="primary" (click)="buttonSerch('JS')">JS</button>
+      <button mat-button color="warn" (click)="buttonSerch('TS')">TS</button>
+      <button mat-button color="primary" (click)="buttonSerch('Angular 13')">Angular 13</button>
+      <button mat-button color="warn" (click)="buttonSerch('React-Redux')">React-Redux</button>
+    </div>
+    <mat-form-field class="Search-page-input" appearance="outline">
+      <mat-label>Git search</mat-label>
+      <input type="search"
+             matInput
+             [(ngModel)]="text"
+             (keyup)="search()"
+             [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredResults" [value]="option.name" (click)="selectRes(option)">
+          <span class="tag-color">
+            {{ option.name }}
+          </span>
+        </mat-option>
+        <mat-option *ngIf="isLoading">
+          <div class="loading-spinner">
+            <mat-progress-spinner [diameter]="20" mode="indeterminate"></mat-progress-spinner>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <mat-card *ngIf="selectedResult">
+    <h1>{{selectedResult.name}}</h1>
+    <p>Branch: {{selectedResult.name}}</p>
+    <p>Description: {{selectedResult.description}}</p>
+    <p>Owner: {{selectedResult.owner.login}}</p>
+    <p>license: {{selectedResult.license.name}}</p>
+    <p>language: {{selectedResult.language}}</p>
+  </mat-card>
+</div>
